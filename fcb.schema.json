@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/adroitgroup/fcb/fcb.schema.json",
+  "title": "FCB Configuration",
+  "description": "Configuration file for the FCB cloud cost browsing CLI.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_files"],
+  "properties": {
+    "source_files": {
+      "type": "array",
+      "description": "Paths to the parquet files containing FOCUS schema cost exports.",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1,
+      "examples": [["./aws.snappy.parquet", "./gcp.snappy.parquet"]]
+    },
+    "excluded_fields": {
+      "type": "array",
+      "description": "Field names that must be omitted from the response. Mutually exclusive with included_fields.",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true,
+      "examples": [["ServiceName", "Tags"]]
+    },
+    "included_fields": {
+      "type": "array",
+      "description": "Field names to keep in the response; all other fields are omitted. Mutually exclusive with excluded_fields.",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true,
+      "examples": [["ResourceId", "BilledCost", "ServiceName"]]
+    }
+  },
+  "not": {
+    "required": ["excluded_fields", "included_fields"]
+  }
+}
