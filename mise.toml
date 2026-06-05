@@ -1,0 +1,10 @@
+[tools]
+uv = "0.11.19"
+
+[tasks.lint]
+dir = "{{ config_root }}"
+run = ["uv run ruff format", "uv run ty check", "uv run ruff check --fix"]
+
+[settings]
+experimental = true
+lockfile = true

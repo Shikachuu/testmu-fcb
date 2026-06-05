@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "test \"$(cat | jq -r \".stop_hook_active // false\")\" = true && exit 0; mise run lint >&2 || exit 2",
+            "timeout": 60,
+            "statusMessage": "Running mise run lint..."
+          }
+        ]
+      }
+    ]
+  }
+}
