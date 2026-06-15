@@ -1,0 +1,18 @@
+[tools]
+uv = "0.11.19"
+"aqua:mfontanini/presenterm" = "latest"
+
+[tasks.lint]
+dir = "{{ config_root }}"
+run = ["uv run ruff format", "uv run ty check", "uv run ruff check --fix"]
+
+[tasks.test]
+dir = "{{ config_root }}"
+run = "uv run pytest"
+
+[tasks.present]
+dir = "{{ config_root }}"
+run = "presenterm -x -c presenterm.yaml deck.md"
+
+[settings]
+quiet = true

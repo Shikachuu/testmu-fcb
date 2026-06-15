@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adroitgroup.io/fcb.schema.json",
+  "title": "fcb configuration",
+  "description": "Configuration for the fcb FOCUS-schema cost browser.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_files"],
+  "properties": {
+    "source_files": {
+      "type": "array",
+      "description": "Parquet files (FOCUS exports) to read and merge.",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "examples": [["aws.snappy.parquet", "aws2.snappy.parquet"]]
+    },
+    "excluded_fields": {
+      "type": "array",
+      "description": "Fields to omit from the output. Mutually exclusive with included_fields.",
+      "items": { "type": "string", "minLength": 1 },
+      "examples": [["Tags", "SkuPriceDetails"]]
+    },
+    "included_fields": {
+      "type": "array",
+      "description": "Only these fields are kept in the output. Mutually exclusive with excluded_fields.",
+      "items": { "type": "string", "minLength": 1 },
+      "examples": [["ResourceId", "BilledCost"]]
+    }
+  },
+  "not": {
+    "description": "excluded_fields and included_fields are mutually exclusive.",
+    "required": ["excluded_fields", "included_fields"]
+  }
+}

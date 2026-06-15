@@ -1,0 +1,1 @@
+{"source_files":["aws.snappy.parquet"],"included_fields":["ResourceId"],"excluded_fields":["Tags"]}

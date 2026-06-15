@@ -1,0 +1,15 @@
+snippet:
+  exec:
+    enable: true
+
+defaults:
+  theme: dark # swap for: dark, light, tokyonight-storm, gruvbox-dark, terminal-dark
+
+transition:
+  duration_millis: 750
+  frames: 60
+  animation:
+    style: slide_horizontal
+
+options:
+  end_slide_shorthand: true

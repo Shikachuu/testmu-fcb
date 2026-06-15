@@ -1,0 +1,4 @@
+{
+  "source_files": ["aws.snappy.parquet", "aws2.snappy.parquet"],
+  "included_fields": ["ResourceId", "BilledCost"]
+}
