@@ -267,23 +267,7 @@ convention = "google"
 
 <!-- column: 0 -->
 
-**Generated, no nets**
-
-```python
-def order_price_asc(frame):
-    return _order_by(
-        frame, PRICE_FIELD,
-        ascending=False,   # bug
-    )
-```
-
-- no types
-- no docs
-- silent logical flips
-
-<!-- column: 1 -->
-
-**Generated, inside the loop**
+**Code**
 
 ```python
 def order_price_asc(
@@ -299,7 +283,25 @@ def order_price_asc(
 
 - typed, documented, **correct**
 
+<!-- column: 1 -->
+
+**Coden't**
+
+```python
+def order_price_asc(frame):
+    return _order_by(
+        frame, PRICE_FIELD,
+        ascending=False,   # bug
+    )
+```
+
+- no types
+- no docs
+- silent logical flips
+
 <!-- reset_layout -->
+
+![image:width:30%](dogo.png)
 
 <!-- end_slide -->
 
@@ -309,23 +311,7 @@ def order_price_asc(
 
 <!-- column: 0 -->
 
-**Generated, no nets**
-
-```python
-def run_pipeline(frame, ...):
-    if frame.empty:
-        return []
-    ...
-    return frame
-```
-
-- two return types
-- `list` has no `.to_dict`
-- explodes on empty input
-
-<!-- column: 1 -->
-
-**Generated, inside the loop**
+**Code**
 
 ```python
 def run_pipeline(
@@ -339,7 +325,25 @@ def run_pipeline(
 - one return type, **enforced by ty**
 - empty frame just flows through
 
+<!-- column: 1 -->
+
+**Coden't**
+
+```python
+def run_pipeline(frame, ...):
+    if frame.empty:
+        return []
+    ...
+    return frame
+```
+
+- two return types
+- `list` has no `.to_dict`
+- explodes on empty input
+
 <!-- reset_layout -->
+
+![image:width:30%](dogo.png)
 
 <!-- end_slide -->
 
@@ -349,23 +353,7 @@ def run_pipeline(
 
 <!-- column: 0 -->
 
-**Generated, no nets**
-
-```python
-def load_config(path):
-    ext = Path(path).suffix
-    ...
-    raise ValueError(
-        "bad ext: %s" % ext
-    )
-```
-
-- printf `%` formatting
-- trailing whitespace
-
-<!-- column: 1 -->
-
-**Generated, inside the loop**
+**Code**
 
 ```python
 def load_config(
@@ -379,7 +367,25 @@ def load_config(
 
 - f-string, clean — **ruff auto-fixes**
 
+<!-- column: 1 -->
+
+**Coden't**
+
+```python
+def load_config(path):
+    ext = Path(path).suffix
+    ...
+    raise ValueError(
+        "bad ext: %s" % ext
+    )
+```
+
+- printf `%` formatting
+- trailing whitespace
+
 <!-- reset_layout -->
+
+![image:width:30%](dogo.png)
 
 <!-- end_slide -->
 
@@ -389,22 +395,7 @@ def load_config(
 
 <!-- column: 0 -->
 
-**Generated, no nets**
-
-```python
-config = json.loads(text)
-# anything goes:
-#   unknown keys
-#   both field sets
-#   typos
-# ...all accepted
-```
-
-- no validation, silent drift
-
-<!-- column: 1 -->
-
-**Generated, inside the loop**
+**Code**
 
 ```python
 config.pop("$schema", None)
@@ -418,7 +409,24 @@ validate(
 - mutual exclusivity **enforced**
 - `$schema` → IDE completion
 
+<!-- column: 1 -->
+
+**Coden't**
+
+```python
+config = json.loads(text)
+# anything goes:
+#   unknown keys
+#   both field sets
+#   typos
+# ...all accepted
+```
+
+- no validation, silent drift
+
 <!-- reset_layout -->
+
+![image:width:30%](dogo.png)
 
 <!-- end_slide -->
 
@@ -427,20 +435,6 @@ validate(
 <!-- column_layout: [1, 1] -->
 
 <!-- column: 0 -->
-
-**`wrong_example.py`**
-
-```bash +exec
-W=wrong_example.py
-echo "▶ price-asc → cheapest first?"
-uv run python $W -f config.json -o price-asc -a | jq 'first.BilledCost'
-echo "▶ empty input"
-uv run python $W -f edge-empty.json 2>&1 | tail -1
-echo "▶ unknown config key"
-uv run python $W -f edge-unknown.json | jq length
-```
-
-<!-- column: 1 -->
 
 **`correct_example.py`**
 
@@ -454,11 +448,31 @@ echo "▶ unknown config key"
 uv run python $C -f edge-unknown.json 2>&1 | grep -o "Additional.*"
 ```
 
+<!-- column: 1 -->
+
+**`wrong_example.py`**
+
+```bash +exec
+W=wrong_example.py
+echo "▶ price-asc → cheapest first?"
+uv run python $W -f config.json -o price-asc -a | jq 'first.BilledCost'
+echo "▶ empty input"
+uv run python $W -f edge-empty.json 2>&1 | tail -1
+echo "▶ unknown config key"
+uv run python $W -f edge-unknown.json | jq length
+```
+
 <!-- reset_layout -->
+
+![image:width:30%](dogo.png)
 
 <!-- end_slide -->
 
 # Takeaways
+
+<!-- column_layout: [1, 1] -->
+
+<!-- column: 0 -->
 
 <!-- jump_to_middle -->
 
@@ -466,10 +480,24 @@ uv run python $C -f edge-unknown.json 2>&1 | grep -o "Additional.*"
 2. **ruff + ty** catch structure; **pytest** catches behavior — you need all of it
 3. The win isn't the tools, it's **moving them left into the agent's loop as a hard gate**
 
-<!-- end_slide -->
+<!-- column: 1 -->
 
 <!-- jump_to_middle -->
 
+![image](stonks.png)
+
+<!-- end_slide -->
+
 # Thank you
 
+<!-- column_layout: [1, 1] -->
+
+<!-- column: 0 -->
+
+<!-- jump_to_middle -->
+
 Back to Aamna!
+
+<!-- column: 1 -->
+
+![image](back.png)
